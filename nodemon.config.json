@@ -1,10 +1,10 @@
 {
   "watch": [
-    "./server/"
+    "./api/"
   ],
   "ext": "ts",
   "ignore": [
     "**/*.test.ts"
   ],
-  "exec": "ts-node --project ./tsconfig.server.json --files ./server/app.ts"
+  "exec": "ts-node --project ./tsconfig.server.json --files ./api/server.ts"
 }

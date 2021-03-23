@@ -18,7 +18,7 @@
     ],
     "paths": {
       "@/*": [
-        "server/*"
+        "api/*"
       ]
     },
     "lib": [
@@ -28,9 +28,9 @@
       "scripthost"
     ]
   },
-  "files": ["server/app.ts"],
+  "files": ["api/server.ts"],
   "include": [
-    "server/**/*.ts"
+    "api/**/*.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }
