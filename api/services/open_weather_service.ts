@@ -1,22 +1,33 @@
 import { City, DayForecast, CallResult } from "../../src/common/types"
 import axios from "axios"
 
-const END_POINT = "https://api.openweathermap.org/data/2.5/forecast?zip="
+const END_POINT = "https://api.openweathermap.org/data/2.5/"
+const FC_ROUTE = "forecast"
+const UV_ROUTE = "uvi"
 const RESULTS_PER_DAY = 24 / 3
 
-export async function fetch5DayForecast(zipCode: string) {
+export async function fetch5DayForecast(zipCode: string, units: string): Promise<CallResult> {
   const API_KEY = process.env.API_KEY
   try {
-    const resp = await axios.get(END_POINT + zipCode + "&appid=" + API_KEY + "&units=metric")
+    const resp = await axios.get(END_POINT + FC_ROUTE + "?zip=" + zipCode + "&appid=" + API_KEY + "&units=" + units)
     return parseForecastResp(resp)
   } catch (err) {
-    // TODO reject the promise in the catch
-    console.error(err)
+    throw new Error(err)
+  }
+}
+
+export async function fetchUV(lat: number, long: number): Promise<number> {
+  const API_KEY = process.env.API_KEY
+  try {
+    const resp = await axios.get(END_POINT + UV_ROUTE + "?lat=" + lat + "&lon=" + long + "&appid=" + API_KEY)
+    return resp.data.value
+  } catch (err) {
+    throw new Error(err)
   }
 }
 
 // TODO, can I improve on the any below?
-function parseForecastResp(resp: any) {
+function parseForecastResp(resp: any): CallResult {
   try {
     const cityData = resp.data.city
     const { name, coord } = cityData
@@ -25,6 +36,7 @@ function parseForecastResp(resp: any) {
 
     let forecasts: Array<DayForecast> = []
 
+    // iterate the list and push each 8th element
     resp.data.list.forEach((forecast: any, idx: number) => {
       if (idx % RESULTS_PER_DAY === 0) {
         const timestamp = new Date(forecast.dt * 1000)

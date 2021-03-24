@@ -5,7 +5,14 @@ export class DayForecast {
   timestamp: Date
   iconCode: string
   description: string
-  constructor(tempHigh: number, tempLow: number, feelsLike: number, timestamp: Date, iconCode: string, description: string) {
+  constructor(
+    tempHigh: number,
+    tempLow: number,
+    feelsLike: number,
+    timestamp: Date,
+    iconCode: string,
+    description: string
+  ) {
     this.tempHigh = tempHigh
     this.tempLow = tempLow
     this.feelsLike = feelsLike
@@ -29,8 +36,15 @@ export class City {
 export class CallResult {
   city: City
   forecastList: Array<DayForecast>
-  constructor(city: City, forecastList: Array<DayForecast>) {
+  currentUV: number
+  constructor(city: City, forecastList: Array<DayForecast>, currentUV?: number) {
     this.city = city
     this.forecastList = forecastList
+    this.currentUV = currentUV ? currentUV : -1
   }
+
+  set uvi(uvi: number) {
+    this.currentUV = uvi
+  }
+ 
 }
