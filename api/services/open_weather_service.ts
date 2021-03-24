@@ -5,10 +5,10 @@ const END_POINT = "https://api.openweathermap.org/data/2.5/forecast?zip="
 
 // TODO store the secret in an environment variable
 
-export async function fetch5DayForecast(zipCode: number) /*: Promise<Array<Forecast>> */ {
+export async function fetch5DayForecast(zipCode: string) /*: Promise<Array<Forecast>> */ {
   const API_KEY = process.env.API_KEY
   try {
-    let resp = await axios.get(END_POINT + zipCode + "&appid=" + API_KEY)
+    const resp = await axios.get(END_POINT + zipCode + "&appid=" + API_KEY)
     return resp.data
   } catch (error) {
     return error

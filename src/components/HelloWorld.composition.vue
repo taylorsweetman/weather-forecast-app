@@ -17,8 +17,14 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    <label>Enter Zip Code</label>
+    <br />
+    <input v-model="zipCode" />
+    <br />
     <button @click="testCall()">Click Me</button>
     <br />
+    <br />
+    {{ zipCode }}
     <br />
     {{ test }}
   </div>
@@ -37,13 +43,14 @@ export default defineComponent({
   },
   data() {
     return {
-      test: ""
+      test: "",
+      zipCode: ""
     }
   },
   methods: {
     async testCall() {
       try {
-        const resp = await axios.get("http://localhost:3000/test")
+        const resp = await axios.get("http://localhost:3000/forecast/" + this.zipCode)
         console.log(resp)
         this.test = resp.data
       } catch (error) {

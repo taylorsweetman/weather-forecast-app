@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 app.get("/", home.index)
-app.get("/test", home2.index)
+app.get("/forecast/:zip", home2.index)
 
 app.listen(app.get("port"), () => {
   console.log("App is running at http://localhost:%d in %s mode", app.get("port"), app.get("env"))
