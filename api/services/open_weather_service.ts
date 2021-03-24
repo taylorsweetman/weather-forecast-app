@@ -9,7 +9,13 @@ export async function fetch5DayForecast(zipCode: string) /*: Promise<Array<Forec
   const API_KEY = process.env.API_KEY
   try {
     const resp = await axios.get(END_POINT + zipCode + "&appid=" + API_KEY)
-    return resp.data
+
+    let forecastList = [];
+    for (let forecast of resp.data.list) {
+      forecastList.push(forecast);
+    }
+
+    return forecastList
   } catch (error) {
     return error
   }
