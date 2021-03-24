@@ -2,10 +2,12 @@ export class DayForecast {
   temp: string
   feelsLike: string
   timestamp: Date
-  constructor(temp: string, feelsLike: string, timestamp: Date) {
+  iconCode: string
+  constructor(temp: string, feelsLike: string, timestamp: Date, iconCode: string) {
     this.temp = temp
     this.feelsLike = feelsLike
     this.timestamp = timestamp
+    this.iconCode = iconCode
   }
 }
 

@@ -9,7 +9,7 @@ const RESULTS_PER_DAY = 24 / 3
 export async function fetch5DayForecast(zipCode: string) /*: Promise<Array<Forecast>> */ {
   const API_KEY = process.env.API_KEY
   try {
-    const resp = await axios.get(END_POINT + zipCode + "&appid=" + API_KEY)
+    const resp = await axios.get(END_POINT + zipCode + "&appid=" + API_KEY + "&units=metric")
 
     const cityData = resp.data.city
     const { name, coord } = cityData
@@ -18,13 +18,12 @@ export async function fetch5DayForecast(zipCode: string) /*: Promise<Array<Forec
 
     let forecasts: Array<DayForecast> = []
 
-    //console.log(JSON.stringify(resp.data));
-
     resp.data.list.forEach((forecast: any, idx: number) => {
       if (idx % RESULTS_PER_DAY === 0) {
         const timestamp = new Date(forecast.dt * 1000)
         const { temp, feels_like } = forecast.main
-        const nextDay = new DayForecast(temp, feels_like, timestamp)
+        const { icon } = forecast.weather[0]
+        const nextDay = new DayForecast(temp, feels_like, timestamp, icon)
         forecasts.push(nextDay)
       }
     })
