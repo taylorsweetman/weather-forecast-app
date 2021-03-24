@@ -1,16 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <ul>
-      <li>
-        <a href="#" @click="isCompositionHome = true">Home with Composition API</a>
-      </li>
-      <li>
-        <a href="#" @click="isCompositionHome = false">Home with Options API</a>
-      </li>
-    </ul>
-    <HelloWorldComp v-if="isCompositionHome" msg="[Composition API]: Welcome to Your Vue.js + TypeScript App" />
-    <HelloWorldOpt v-else msg="[Options API]: Welcome to Your Vue.js + TypeScript App" />
+    <HelloWorldComp msg="[Composition API]: Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>
 
@@ -18,12 +9,10 @@
 import { defineComponent, reactive, toRefs } from "vue"
 // @ is an alias to /src
 import HelloWorldComp from "@/components/HelloWorld.composition.vue"
-import HelloWorldOpt from "@/components/HelloWorld.options.vue"
 
 export default defineComponent({
   components: {
-    HelloWorldComp,
-    HelloWorldOpt
+    HelloWorldComp
   },
   setup() {
     const state = reactive({
