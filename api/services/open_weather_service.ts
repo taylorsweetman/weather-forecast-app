@@ -1,7 +1,8 @@
-import { Forecast } from "../../src/common/types"
+import { City, DayForecast, CallResult } from "../../src/common/types"
 import axios from "axios"
 
 const END_POINT = "https://api.openweathermap.org/data/2.5/forecast?zip="
+const RESULTS_PER_DAY = 24 / 3
 
 // TODO store the secret in an environment variable
 
@@ -10,12 +11,26 @@ export async function fetch5DayForecast(zipCode: string) /*: Promise<Array<Forec
   try {
     const resp = await axios.get(END_POINT + zipCode + "&appid=" + API_KEY)
 
-    let forecastList = [];
-    for (let forecast of resp.data.list) {
-      forecastList.push(forecast);
-    }
+    const cityData = resp.data.city
+    const { name, coord } = cityData
+    const { lat, lon } = coord
+    const queriedCity = new City(name, lat, lon)
 
-    return forecastList
+    let forecasts: Array<DayForecast> = []
+
+    //console.log(JSON.stringify(resp.data));
+
+    resp.data.list.forEach((forecast: any, idx: number) => {
+      if (idx % RESULTS_PER_DAY === 0) {
+        const timestamp = new Date(forecast.dt * 1000)
+        const { temp, feels_like } = forecast.main
+        const nextDay = new DayForecast(temp, feels_like, timestamp)
+        forecasts.push(nextDay)
+      }
+    })
+
+    const resultData = new CallResult(queriedCity, forecasts)
+    return resultData
   } catch (error) {
     return error
   }
