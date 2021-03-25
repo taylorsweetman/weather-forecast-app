@@ -9,7 +9,6 @@
       v-for="day in forecastList"
       :key="day.timestamp"
       :high="day.tempHigh"
-      :low="day.tempLow"
       :timestamp="new Date(day.timestamp)"
       :feels-like="day.feelsLike"
       :icon-code="day.iconCode"
@@ -69,5 +68,12 @@ export default defineComponent({
 <style scoped>
 .weather-table {
   color: white;
+}
+
+input {
+  background-color: #00adb5;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
 }
 </style>

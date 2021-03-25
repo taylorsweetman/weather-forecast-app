@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <p>{{ timestamp }} --- {{ high }} --- {{ low }} --- {{ feelsLike }} ---</p>
+  <div class="box">
+    <p>{{ weekDay() }}</p>
+    <p>Temp: {{ high }}</p>
+    <p>Feels Like: {{ feelsLike }}</p>
     <img :src="'weather_icons/' + fileName()" alt="weather icon" width="75" height="75" />
     <p>{{ description }}</p>
   </div>
@@ -8,15 +10,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import data from "../common/weather-codes-icon-map.json"
+import iconData from "../mappings/weather-codes-icon-map.json"
+import daysOfWeek from "../mappings/days-of-week-map.json"
 
 export default defineComponent({
   props: {
     high: {
-      type: Number,
-      required: true
-    },
-    low: {
       type: Number,
       required: true
     },
@@ -39,8 +38,12 @@ export default defineComponent({
   },
   methods: {
     fileName(): string {
-      const iconMap: { [key: string]: string } = data
+      const iconMap: { [key: string]: string } = iconData
       return iconMap[this.iconCode]
+    },
+    weekDay(): string {
+      const daysMap: { [key: string]: string } = daysOfWeek
+      return daysMap[this.timestamp.toString().slice(0, 3)]
     }
   }
 })
