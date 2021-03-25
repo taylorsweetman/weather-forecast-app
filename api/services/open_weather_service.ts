@@ -1,33 +1,37 @@
 import { City, DayForecast, CallResult } from "../../src/common/types"
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
 
+// define constants
 const END_POINT = "https://api.openweathermap.org/data/2.5/"
 const FC_ROUTE = "forecast"
 const UV_ROUTE = "uvi"
 const RESULTS_PER_DAY = 24 / 3
 
 export async function fetch5DayForecast(zipCode: string, units: string): Promise<CallResult> {
-  const API_KEY = process.env.API_KEY
+  const apiKey = process.env.API_KEY
   try {
-    const resp = await axios.get(END_POINT + FC_ROUTE + "?zip=" + zipCode + "&appid=" + API_KEY + "&units=" + units)
+    const resp = await axios.get(END_POINT + FC_ROUTE + "?zip=" + zipCode + "&appid=" + apiKey + "&units=" + units)
     return parseForecastResp(resp)
   } catch (err) {
-    throw new Error(err)
+    if (err.response) throw new Error(err.response.status)
+    else if (err.request) throw new Error(err.response)
+    else throw new Error(err)
   }
 }
 
 export async function fetchUV(lat: number, long: number): Promise<number> {
-  const API_KEY = process.env.API_KEY
+  const apiKey = process.env.API_KEY
   try {
-    const resp = await axios.get(END_POINT + UV_ROUTE + "?lat=" + lat + "&lon=" + long + "&appid=" + API_KEY)
+    const resp = await axios.get(END_POINT + UV_ROUTE + "?lat=" + lat + "&lon=" + long + "&appid=" + apiKey)
     return resp.data.value
   } catch (err) {
-    throw new Error(err)
+    if (err.response) throw new Error(err.response.status)
+    else if (err.request) throw new Error(err.response)
+    else throw new Error(err)
   }
 }
 
-// TODO, can I improve on the any below?
-function parseForecastResp(resp: any): CallResult {
+function parseForecastResp(resp: AxiosResponse<any>): CallResult {
   try {
     const cityData = resp.data.city
     const { name, coord } = cityData

@@ -9,7 +9,7 @@ export const index = async (req: Request, res: Response) => {
     forecastData.currentUV = uvi
     res.status(200).send(forecastData)
   } catch (err) {
-    // improvement idea: parse the error and send different status codes
-    res.status(500).send(err)
+    if (err.message == 404) res.status(404).send("Bad zipcode")
+    else res.status(500).send("Internal Error")
   }
 }
