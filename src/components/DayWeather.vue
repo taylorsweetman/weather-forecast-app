@@ -1,8 +1,8 @@
 <template>
   <div>
-    {{ timestamp }} --- {{ high }} --- {{ low }} --- {{ feelsLike }} ---
+    <p>{{ timestamp }} --- {{ high }} --- {{ low }} --- {{ feelsLike }} ---</p>
     <img :src="'weather_icons/' + fileName()" alt="weather icon" width="75" height="75" />
-    {{ description }}
+    <p>{{ description }}</p>
   </div>
 </template>
 
@@ -45,3 +45,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+p {
+  color: white;
+}
+</style>

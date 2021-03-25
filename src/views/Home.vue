@@ -1,24 +1,19 @@
 <template>
   <div class="home">
+    <TopBar />
     <WeatherTable />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue"
-// @ is an alias to /src
+import { defineComponent } from "vue"
 import WeatherTable from "@/components/WeatherTable.vue"
+import TopBar from "@/components/TopBar.vue"
 
 export default defineComponent({
   components: {
-    WeatherTable
-  },
-  setup() {
-    const state = reactive({
-      isCompositionHome: true
-    })
-
-    return { ...toRefs(state) }
+    WeatherTable,
+    TopBar
   }
 })
 </script>
