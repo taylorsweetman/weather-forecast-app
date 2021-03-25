@@ -1,19 +1,16 @@
 <template>
   <div>
     {{ timestamp }} --- {{ high }} --- {{ low }} --- {{ feelsLike }} ---
-    <img src="../assets/weather_icons/art_clear.png" /> ---
+    <img :src="'weather_icons/' + fileName()" alt="weather icon" width="75" height="75" />
     {{ description }}
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import mapping from "../common/weather-codes-icon-map.json"
+import data from "../common/weather-codes-icon-map.json"
 
 export default defineComponent({
-  data() {
-    return { testMap: mapping }
-  },
   props: {
     high: {
       type: Number,
@@ -38,6 +35,12 @@ export default defineComponent({
     description: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    fileName(): string {
+      const iconMap: { [key: string]: string } = data
+      return iconMap[this.iconCode]
     }
   }
 })

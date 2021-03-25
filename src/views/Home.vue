@@ -1,18 +1,17 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorldComp />
+    <WeatherTable />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue"
 // @ is an alias to /src
-import HelloWorldComp from "@/components/HelloWorld.vue"
+import WeatherTable from "@/components/WeatherTable.vue"
 
 export default defineComponent({
   components: {
-    HelloWorldComp
+    WeatherTable
   },
   setup() {
     const state = reactive({

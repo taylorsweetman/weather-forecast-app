@@ -5,6 +5,6 @@ declare module "*.vue" {
 }
 
 declare module "*.json" {
-  const value: { [key: string]: string }
-  export default value
+  const data: { [key: string]: string }
+  export default data
 }
