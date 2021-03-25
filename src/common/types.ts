@@ -26,10 +26,10 @@ export class City {
   name: string
   lat: number
   long: number
-  constructor(name: string, lat: number, long: number) {
-    this.name = name
-    this.lat = lat
-    this.long = long
+  constructor(name?: string, lat?: number, long?: number) {
+    this.name = name ? name : ""
+    this.lat = lat ? lat : -1
+    this.long = long ? long : -1
   }
 }
 
@@ -37,14 +37,13 @@ export class CallResult {
   city: City
   forecastList: Array<DayForecast>
   currentUV: number
-  constructor(city: City, forecastList: Array<DayForecast>, currentUV?: number) {
-    this.city = city
-    this.forecastList = forecastList
+  constructor(city?: City, forecastList?: Array<DayForecast>, currentUV?: number) {
+    this.city = city ? city : new City()
+    this.forecastList = forecastList ? forecastList : []
     this.currentUV = currentUV ? currentUV : -1
   }
 
   set uvi(uvi: number) {
     this.currentUV = uvi
   }
- 
 }

@@ -2,40 +2,50 @@
   <div class="hello">
     <label>Enter Zip Code</label>
     <br />
-    <input v-model="zipCode" />
-    <br />
-    <button @click="testCall()">Click Me</button>
+    <input v-model="zipCode" @keyup="verifyZip" />
     <br />
     <br />
-    {{ zipCode }}
+    {{ cityName }}
+    <div v-if="currentUvi > 0">Current UV Index: {{ currentUvi }}</div>
     <br />
-    {{ test }}
+    <br />
+    {{ dataPayload }}
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
+import { CallResult } from "../common/types"
 import axios from "axios"
 
 export default defineComponent({
-  props: {
-    msg: {
-      type: String,
-      required: true
-    }
-  },
   data() {
     return {
-      test: "",
-      zipCode: ""
+      dataPayload: new CallResult(),
+      zipCode: "",
+      goodZip: false,
+      cityName: "",
+      currentUvi: -1
+    }
+  },
+  watch: {
+    goodZip: function(val) {
+      if (val) this.fetchData()
     }
   },
   methods: {
-    async testCall() {
+    verifyZip() {
+      const pattern = new RegExp(/^\d{5}$/)
+      if (pattern.test(this.zipCode)) this.goodZip = true
+      else this.goodZip = false
+    },
+    async fetchData() {
       try {
-        const resp = await axios.get("http://localhost:3000/forecast/" + this.zipCode)
-        console.log(resp)
-        this.test = resp.data
+        const result: CallResult = (await axios.get("http://localhost:3000/forecast/" + this.zipCode)).data
+        console.log(result)
+        this.dataPayload = result
+        this.cityName = result.city.name
+        this.currentUvi = result.currentUV
       } catch (error) {
         console.error(error)
       }
