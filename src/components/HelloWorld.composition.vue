@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <label>Enter Zip Code</label>
     <br />
     <input v-model="zipCode" @keyup="verifyZip" />
@@ -9,13 +9,13 @@
     <div v-if="currentUvi > 0">Current UV Index: {{ currentUvi }}</div>
     <br />
     <br />
-    {{ dataPayload }}
+    {{ forecastList }}
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import { CallResult } from "../common/types"
+import { CallResult, DayForecast } from "../common/types"
 import axios from "axios"
 
 export default defineComponent({
@@ -25,7 +25,8 @@ export default defineComponent({
       zipCode: "",
       goodZip: false,
       cityName: "",
-      currentUvi: -1
+      currentUvi: -1,
+      forecastList: new Array<DayForecast>()
     }
   },
   watch: {
@@ -46,6 +47,10 @@ export default defineComponent({
         this.dataPayload = result
         this.cityName = result.city.name
         this.currentUvi = result.currentUV
+        this.forecastList = new Array<DayForecast>()
+        for (const nextDay of result.forecastList) {
+          this.forecastList.push(nextDay)
+        }
       } catch (error) {
         console.error(error)
       }
