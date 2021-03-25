@@ -9,16 +9,28 @@
     <div v-if="currentUvi > 0">Current UV Index: {{ currentUvi }}</div>
     <br />
     <br />
-    {{ forecastList }}
+    <!-- {{ forecastList }} -->
+    <day-weather
+      v-for="day in forecastList"
+      :key="day.timestamp"
+      :high="day.tempHigh"
+      :low="day.tempLow"
+      :timestamp="day.timestamp"
+      :feels-like="day.feelsLike"
+      :icon-code="day.iconCode"
+      :description="day.description"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
 import { CallResult, DayForecast } from "../common/types"
+import DayWeather from "../components/DayWeather.vue"
 import axios from "axios"
 
 export default defineComponent({
+  components: { DayWeather },
   data() {
     return {
       dataPayload: new CallResult(),

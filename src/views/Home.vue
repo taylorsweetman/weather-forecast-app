@@ -1,14 +1,14 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorldComp msg="[Composition API]: Welcome to Your Vue.js + TypeScript App" />
+    <HelloWorldComp />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue"
 // @ is an alias to /src
-import HelloWorldComp from "@/components/HelloWorld.composition.vue"
+import HelloWorldComp from "@/components/HelloWorld.vue"
 
 export default defineComponent({
   components: {
