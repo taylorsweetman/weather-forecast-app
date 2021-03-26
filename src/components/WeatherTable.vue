@@ -6,7 +6,7 @@
     <div>{{ cityName }}</div>
     <div v-if="currentUvi > 0">Current UV Index: {{ currentUvi }}</div>
     <day-weather
-      v-for="day in forecastList"
+      v-for="(day, idx) in forecastList"
       :key="day.timestamp"
       :high="day.tempHigh"
       :timestamp="new Date(day.timestamp)"
@@ -17,6 +17,8 @@
       :humidity="day.humidity"
       :wind-speed="day.windSpeed"
       :pressure="day.pressure"
+      :selected="stateList[idx]"
+      @click="selectDay(idx)"
     />
   </div>
 </template>
@@ -37,7 +39,8 @@ export default defineComponent({
       cityName: "",
       currentUvi: -1,
       forecastList: new Array<DayForecast>(),
-      mobileMode: false
+      mobileMode: false,
+      stateList: [false, false, false, false, false]
     }
   },
   watch: {
@@ -67,6 +70,12 @@ export default defineComponent({
       } catch (error) {
         console.error(error)
       }
+    },
+    selectDay(idx: number) {
+      this.stateList = this.stateList.map((active, listIdx) => {
+        if (idx === listIdx) return !active
+        else return false
+      })
     }
   }
 })

@@ -1,5 +1,5 @@
 <template>
-  <div @click="selected = !selected" class="box">
+  <div class="box">
     <img :src="'weather_icons/' + fileName()" alt="weather icon" width="50" height="50" />
     <div class="left">
       <p>{{ weekDay() }}</p>
@@ -60,11 +60,10 @@ export default defineComponent({
     pressure: {
       type: Number,
       required: true
-    }
-  },
-  data() {
-    return {
-      selected: false
+    },
+    selected: {
+      type: Boolean,
+      required: true
     }
   },
   methods: {
