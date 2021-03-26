@@ -3,8 +3,8 @@
     <label>Enter Zip Code</label>
     <br />
     <input v-model="zipCode" @keyup="verifyZip" />
-    <p>{{ cityName }}</p>
-    <p v-if="currentUvi > 0">Current UV Index: {{ currentUvi }}</p>
+    <div>{{ cityName }}</div>
+    <div v-if="currentUvi > 0">Current UV Index: {{ currentUvi }}</div>
     <day-weather
       v-for="day in forecastList"
       :key="day.timestamp"
@@ -32,7 +32,8 @@ export default defineComponent({
       goodZip: false,
       cityName: "",
       currentUvi: -1,
-      forecastList: new Array<DayForecast>()
+      forecastList: new Array<DayForecast>(),
+      mobileMode: false
     }
   },
   watch: {
@@ -48,8 +49,10 @@ export default defineComponent({
     },
     async fetchData() {
       try {
-        const result: CallResult = (await axios.get("http://localhost:3000/forecast/" + this.zipCode)).data
-        console.log(result)
+        let result: CallResult
+        if (this.mobileMode) result = (await axios.get("http://192.168.2.34:3000/forecast/" + this.zipCode)).data
+        else result = (await axios.get("http://localhost:3000/forecast/" + this.zipCode)).data
+
         this.dataPayload = result
         this.cityName = result.city.name
         this.currentUvi = result.currentUV
@@ -68,6 +71,10 @@ export default defineComponent({
 <style scoped>
 .weather-table {
   color: white;
+}
+
+div {
+  margin-top: 5px;
 }
 
 input {

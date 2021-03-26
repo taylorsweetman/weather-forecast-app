@@ -21,6 +21,8 @@ h1 {
   overflow: hidden;
   border-radius: 10px;
   margin-bottom: 40px;
+  width: 50%;
+  margin-left: 25%;
 }
 
 /* Style the links inside the navigation bar */

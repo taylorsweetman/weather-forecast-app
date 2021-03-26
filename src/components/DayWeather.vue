@@ -1,10 +1,14 @@
 <template>
   <div class="box">
-    <p>{{ weekDay() }}</p>
-    <p>Temp: {{ high }}</p>
-    <p>Feels Like: {{ feelsLike }}</p>
     <img :src="'weather_icons/' + fileName()" alt="weather icon" width="75" height="75" />
-    <p>{{ description }}</p>
+    <div class="left">
+      <p>{{ weekDay() }}</p>
+      <p>{{ description }}</p>
+    </div>
+    <div class="right">
+      <p>Temp: {{ high }}</p>
+      <p>Feels Like: {{ feelsLike }}</p>
+    </div>
   </div>
 </template>
 
@@ -52,5 +56,34 @@ export default defineComponent({
 <style scoped>
 p {
   color: white;
+}
+
+img {
+  margin-right: 2%;
+}
+
+.box {
+  display: flex;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  margin: 1%;
+  border-radius: 10px;
+  padding: 1%;
+  background-color: #393e46;
+  color: white;
+  text-decoration: none;
+  width: 50%;
+  margin-left: 25%;
+}
+
+.left {
+  display: block;
+  margin-right: auto;
+  text-align: left;
+}
+
+.right {
+  display: block;
+  margin-left: auto;
+  text-align: right;
 }
 </style>
