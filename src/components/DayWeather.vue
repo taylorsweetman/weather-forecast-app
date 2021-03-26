@@ -2,8 +2,8 @@
   <div class="box">
     <img :src="'weather_icons/' + fileName()" alt="weather icon" width="50" height="50" />
     <div class="left">
-      <p>{{ weekDay() }}</p>
-      <p>{{ description }}</p>
+      <h2>{{ weekDay() }}</h2>
+      <p class="small-top">{{ description }}</p>
     </div>
     <div class="right">
       <p>Temp: {{ high.toFixed(1) }} &#730;C</p>
@@ -84,9 +84,17 @@ p {
   color: white;
 }
 
+h2 {
+  margin-bottom: 1px;
+}
+
 img {
   margin-top: 2%;
   margin-right: 2%;
+}
+
+.small-top {
+  margin-top: 1px;
 }
 
 .box {
