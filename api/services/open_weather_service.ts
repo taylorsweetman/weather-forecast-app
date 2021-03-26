@@ -44,9 +44,11 @@ function parseForecastResp(resp: AxiosResponse<any>): CallResult {
     resp.data.list.forEach((forecast: any, idx: number) => {
       if (idx % RESULTS_PER_DAY === 0) {
         const timestamp = new Date(forecast.dt * 1000)
-        const { temp_max, temp_min, feels_like } = forecast.main
+        const pop = forecast.pop
+        const { temp_max, temp_min, feels_like, humidity, pressure } = forecast.main
         const { icon, main } = forecast.weather[0]
-        const nextDay = new DayForecast(temp_max, temp_min, feels_like, timestamp, icon, main)
+        const { speed } = forecast.wind
+        const nextDay = new DayForecast(temp_max, temp_min, feels_like, timestamp, icon, main, humidity, speed, pop, pressure)
         forecasts.push(nextDay)
       }
     })

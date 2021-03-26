@@ -13,6 +13,7 @@
       :feels-like="day.feelsLike"
       :icon-code="day.iconCode"
       :description="day.description"
+      :pop="day.pop"
     />
   </div>
 </template>

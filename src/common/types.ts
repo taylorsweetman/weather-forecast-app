@@ -5,13 +5,21 @@ export class DayForecast {
   timestamp: Date
   iconCode: string
   description: string
+  humidity: number
+  windSpeed: number
+  pop: number
+  pressure: number
   constructor(
     tempHigh: number,
     tempLow: number,
     feelsLike: number,
     timestamp: Date,
     iconCode: string,
-    description: string
+    description: string,
+    humidity: number,
+    windSpeed: number,
+    pop: number,
+    pressure: number
   ) {
     this.tempHigh = tempHigh
     this.tempLow = tempLow
@@ -19,6 +27,10 @@ export class DayForecast {
     this.timestamp = timestamp
     this.iconCode = iconCode
     this.description = description
+    this.humidity = humidity
+    this.windSpeed = windSpeed
+    this.pop = pop
+    this.pressure = pressure
   }
 }
 

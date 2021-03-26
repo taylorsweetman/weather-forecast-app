@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <img :src="'weather_icons/' + fileName()" alt="weather icon" width="75" height="75" />
+    <img :src="'weather_icons/' + fileName()" alt="weather icon" width="50" height="50" />
     <div class="left">
       <p>{{ weekDay() }}</p>
       <p>{{ description }}</p>
@@ -8,6 +8,7 @@
     <div class="right">
       <p>Temp: {{ high }}</p>
       <p>Feels Like: {{ feelsLike }}</p>
+      <p>{{ pop }}</p>
     </div>
   </div>
 </template>
@@ -38,6 +39,10 @@ export default defineComponent({
     description: {
       type: String,
       required: true
+    },
+    pop: {
+      type: Number,
+      required: true
     }
   },
   methods: {
@@ -59,6 +64,7 @@ p {
 }
 
 img {
+  margin-top: 2%;
   margin-right: 2%;
 }
 
@@ -67,7 +73,7 @@ img {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 1%;
   border-radius: 10px;
-  padding: 1%;
+  padding: 10px;
   background-color: #393e46;
   color: white;
   text-decoration: none;
@@ -85,5 +91,10 @@ img {
   display: block;
   margin-left: auto;
   text-align: right;
+}
+
+.box:hover {
+  background-color: #00adb5;
+  cursor: pointer;
 }
 </style>
