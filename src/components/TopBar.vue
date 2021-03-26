@@ -21,20 +21,7 @@ h1 {
   overflow: hidden;
   border-radius: 10px;
   margin-bottom: 40px;
-  width: 50%;
-  margin-left: 25%;
-}
-
-/* Style the links inside the navigation bar */
-.topnav .box {
-  padding: 14px 16px;
-  font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav .box:hover {
-  background-color: #eeeeee;
-  color: black;
-  cursor: pointer;
+  width: 30%;
+  margin-left: 35%;
 }
 </style>

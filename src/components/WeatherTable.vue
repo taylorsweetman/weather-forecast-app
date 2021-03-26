@@ -14,6 +14,9 @@
       :icon-code="day.iconCode"
       :description="day.description"
       :pop="day.pop"
+      :humidity="day.humidity"
+      :wind-speed="day.windSpeed"
+      :pressure="day.pressure"
     />
   </div>
 </template>

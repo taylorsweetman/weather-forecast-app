@@ -1,14 +1,19 @@
 <template>
-  <div class="box">
+  <div @click="selected = !selected" class="box">
     <img :src="'weather_icons/' + fileName()" alt="weather icon" width="50" height="50" />
     <div class="left">
       <p>{{ weekDay() }}</p>
       <p>{{ description }}</p>
     </div>
     <div class="right">
-      <p>Temp: {{ high }}</p>
-      <p>Feels Like: {{ feelsLike }}</p>
-      <p>{{ pop }}</p>
+      <p>Temp: {{ high.toFixed(1) }} &#730;C</p>
+      <p>Feels Like: {{ feelsLike.toFixed(1) }} &#730;C</p>
+      <div v-show="selected">
+        <p>Humidity: {{ humidity }} %</p>
+        <p>Wind Speed: {{ windSpeed }} m/s</p>
+        <p>Chance of Rain: {{ pop }} %</p>
+        <p>Pressure: {{ pressure }} hPa</p>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +48,23 @@ export default defineComponent({
     pop: {
       type: Number,
       required: true
+    },
+    humidity: {
+      type: Number,
+      required: true
+    },
+    windSpeed: {
+      type: Number,
+      required: true
+    },
+    pressure: {
+      type: Number,
+      required: true
+    }
+  },
+  data() {
+    return {
+      selected: false
     }
   },
   methods: {
@@ -71,14 +93,14 @@ img {
 .box {
   display: flex;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 1%;
   border-radius: 10px;
   padding: 10px;
   background-color: #393e46;
   color: white;
   text-decoration: none;
-  width: 50%;
-  margin-left: 25%;
+  width: 30%;
+  margin: 1%;
+  margin-left: 35%;
 }
 
 .left {

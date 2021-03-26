@@ -41,6 +41,7 @@ function parseForecastResp(resp: AxiosResponse<any>): CallResult {
     let forecasts: Array<DayForecast> = []
 
     // iterate the list and push each 8th element
+    // improvement idea: take every measurement from the incoming data, and track the highest high, lowest low, and highest POP
     resp.data.list.forEach((forecast: any, idx: number) => {
       if (idx % RESULTS_PER_DAY === 0) {
         const timestamp = new Date(forecast.dt * 1000)
