@@ -39,8 +39,8 @@ export default defineComponent({
       cityName: "",
       currentUvi: -1,
       forecastList: new Array<DayForecast>(),
-      mobileMode: false,
-      stateList: [false, false, false, false, false]
+      stateList: [false, false, false, false, false],
+      mobileMode: false
     }
   },
   watch: {
