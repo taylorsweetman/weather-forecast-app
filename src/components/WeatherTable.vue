@@ -1,10 +1,9 @@
 <template>
   <div class="weather-table">
-    <label>Enter Zip Code</label>
-    <br />
+    <p>Enter Zip Code</p>
     <input v-model="zipCode" @keyup="verifyZip" />
-    <div>{{ cityName }}</div>
-    <div v-if="currentUvi > 0">Current UV Index: {{ currentUvi }}</div>
+    <p class="small-bottom">{{ cityName }}</p>
+    <p class="small-top" v-if="currentUvi > 0">Current UV Index: {{ currentUvi }}</p>
     <day-weather
       v-for="(day, idx) in forecastList"
       :key="day.timestamp"
@@ -84,6 +83,16 @@ export default defineComponent({
 <style scoped>
 .weather-table {
   color: white;
+}
+
+/* TODO refactor */
+.small-bottom {
+  margin-bottom: 1px;
+}
+
+/* TODO refactor */
+.small-top {
+  margin-top: 1px;
 }
 
 div {

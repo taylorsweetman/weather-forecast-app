@@ -16,12 +16,11 @@ h1 {
 }
 
 .topnav {
-  /* background-color: #222831; */
   background-color: #393e46;
   overflow: hidden;
   border-radius: 10px;
   margin-bottom: 40px;
-  width: 30%;
-  margin-left: 35%;
+  padding: 0.25%;
+  text-align: center;
 }
 </style>

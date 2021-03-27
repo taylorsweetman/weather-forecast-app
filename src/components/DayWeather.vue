@@ -97,6 +97,7 @@ img {
   margin-top: 1px;
 }
 
+/* TODO refactor this class and the one in TopBar */
 .box {
   display: flex;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
@@ -105,9 +106,8 @@ img {
   background-color: #393e46;
   color: white;
   text-decoration: none;
-  width: 30%;
   margin: 1%;
-  margin-left: 35%;
+  align-items: center;
 }
 
 .left {
