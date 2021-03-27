@@ -18,6 +18,9 @@ export async function fetch5DayForecast(zipCode: string, units: string): Promise
   }
 }
 
+/**
+ * @deprecated upstream API provider is retiring this call on April 1st 2021 
+ */
 export async function fetchUV(lat: number, long: number): Promise<number> {
   const apiKey = process.env.API_KEY
   try {
