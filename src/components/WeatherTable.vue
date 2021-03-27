@@ -91,5 +91,7 @@ input {
   border: none;
   border-radius: 10px;
   text-align: center;
+  width: 40%;
+  height: 2rem;
 }
 </style>
