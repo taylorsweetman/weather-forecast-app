@@ -33,8 +33,7 @@ export async function fetchUV(lat: number, long: number): Promise<number> {
 
 function parseForecastResp(resp: AxiosResponse<any>): CallResult {
   try {
-    const cityData = resp.data.city
-    const { name, coord } = cityData
+    const { name, coord } = resp.data.city
     const { lat, lon } = coord
     const queriedCity = new City(name, lat, lon)
 

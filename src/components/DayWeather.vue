@@ -2,7 +2,7 @@
   <div class="box">
     <img :src="'weather_icons/' + fileName()" alt="weather icon" width="50" height="50" />
     <div class="left">
-      <h2>{{ weekDay() }}</h2>
+      <h2 class="small-bottom">{{ weekDay() }}</h2>
       <p class="small-top">{{ description }}</p>
     </div>
     <div class="right">
@@ -80,39 +80,28 @@ export default defineComponent({
 </script>
 
 <style scoped>
-p {
-  color: white;
-}
-
-h2 {
-  margin-bottom: 1px;
-}
-
 img {
-  margin-top: 2%;
-  margin-right: 2%;
+  margin-right: 1%;
 }
 
-.small-top {
-  margin-top: 1px;
-}
-
-/* TODO refactor this class and the one in TopBar */
 .box {
   display: flex;
+  background-color: #393e46;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 10px;
   padding: 10px;
-  background-color: #393e46;
-  color: white;
   text-decoration: none;
   margin: 1%;
   align-items: center;
 }
 
+.box:hover {
+  background-color: #00adb5;
+  cursor: pointer;
+}
+
 .left {
   display: block;
-  margin-right: auto;
   text-align: left;
 }
 
@@ -120,10 +109,5 @@ img {
   display: block;
   margin-left: auto;
   text-align: right;
-}
-
-.box:hover {
-  background-color: #00adb5;
-  cursor: pointer;
 }
 </style>

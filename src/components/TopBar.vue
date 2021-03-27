@@ -11,12 +11,10 @@ export default defineComponent({})
 </script>
 
 <style scoped>
-h1 {
-  color: white;
-}
-
 .topnav {
+  color: white;
   background-color: #393e46;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   overflow: hidden;
   border-radius: 10px;
   margin-bottom: 40px;

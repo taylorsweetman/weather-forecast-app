@@ -85,22 +85,9 @@ export default defineComponent({
   color: white;
 }
 
-/* TODO refactor */
-.small-bottom {
-  margin-bottom: 1px;
-}
-
-/* TODO refactor */
-.small-top {
-  margin-top: 1px;
-}
-
-div {
-  margin-top: 5px;
-}
-
 input {
   background-color: #00adb5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border: none;
   border-radius: 10px;
   text-align: center;
