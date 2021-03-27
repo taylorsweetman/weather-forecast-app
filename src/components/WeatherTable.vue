@@ -47,6 +47,7 @@ export default defineComponent({
     async fetchData() {
       this.dataPayload = new CallResult()
       this.errorMsg = ""
+      this.stateList = [false, false, false, false, false]
       try {
         let result: CallResult
         if (this.mobileMode) result = (await axios.get("http://192.168.2.34:3000/forecast/" + this.zipCode)).data
