@@ -4,19 +4,10 @@
     <input v-model="zipCode" @keyup="verifyZip" />
     <p class="small-bottom">{{ dataPayload.city.name }}</p>
     <p class="small-top" v-if="dataPayload.currentUV > 0">Current UV Index: {{ dataPayload.currentUV }}</p>
-    <!-- TODO don't deconstruct the forecastList here, take it as a prop instead -->
     <day-weather
       v-for="(day, idx) in dataPayload.forecastList"
       :key="idx"
-      :high="day.tempHigh"
-      :timestamp="new Date(day.timestamp)"
-      :feels-like="day.feelsLike"
-      :icon-code="day.iconCode"
-      :description="day.description"
-      :pop="day.pop"
-      :humidity="day.humidity"
-      :wind-speed="day.windSpeed"
-      :pressure="day.pressure"
+      :day-info="day"
       :selected="stateList[idx]"
       @click="selectDay(idx)"
     />

@@ -3,16 +3,16 @@
     <img :src="'weather_icons/' + fileName()" alt="weather icon" width="50" height="50" />
     <div class="left">
       <h2 class="small-bottom">{{ weekDay() }}</h2>
-      <p class="small-top">{{ description }}</p>
+      <p class="small-top">{{ dayInfo.description }}</p>
     </div>
     <div class="right">
-      <p>Temp: {{ high.toFixed(1) }} &#730;C</p>
-      <p>Feels Like: {{ feelsLike.toFixed(1) }} &#730;C</p>
+      <p>Temp: {{ dayInfo.tempHigh.toFixed(1) }} &#730;C</p>
+      <p>Feels Like: {{ dayInfo.feelsLike.toFixed(1) }} &#730;C</p>
       <div v-show="selected">
-        <p>Humidity: {{ humidity }} %</p>
-        <p>Wind Speed: {{ windSpeed }} m/s</p>
-        <p>Chance of Rain: {{ pop }} %</p>
-        <p>Pressure: {{ pressure }} hPa</p>
+        <p>Humidity: {{ dayInfo.humidity }} %</p>
+        <p>Wind Speed: {{ dayInfo.windSpeed }} m/s</p>
+        <p>Chance of Rain: {{ dayInfo.pop }} %</p>
+        <p>Pressure: {{ dayInfo.pressure }} hPa</p>
       </div>
     </div>
   </div>
@@ -20,45 +20,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
+import { DayForecast } from "../common/types"
 import iconData from "../mappings/weather-codes-icon-map.json"
 import daysOfWeek from "../mappings/days-of-week-map.json"
 
 export default defineComponent({
   props: {
-    high: {
-      type: Number,
-      required: true
-    },
-    timestamp: {
-      type: Date,
-      required: true
-    },
-    feelsLike: {
-      type: Number,
-      required: true
-    },
-    iconCode: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
-      required: true
-    },
-    pop: {
-      type: Number,
-      required: true
-    },
-    humidity: {
-      type: Number,
-      required: true
-    },
-    windSpeed: {
-      type: Number,
-      required: true
-    },
-    pressure: {
-      type: Number,
+    dayInfo: {
+      type: Object as () => DayForecast,
       required: true
     },
     selected: {
@@ -69,11 +38,11 @@ export default defineComponent({
   methods: {
     fileName(): string {
       const iconMap: { [key: string]: string } = iconData
-      return iconMap[this.iconCode]
+      return iconMap[this.dayInfo.iconCode]
     },
     weekDay(): string {
       const daysMap: { [key: string]: string } = daysOfWeek
-      return daysMap[this.timestamp.toString().slice(0, 3)]
+      return daysMap[this.dayInfo.timestamp.toString().slice(0, 3)]
     }
   }
 })
