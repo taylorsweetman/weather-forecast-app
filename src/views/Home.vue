@@ -18,6 +18,33 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media only screen and (min-width: 540px) {
+  .home {
+    margin-right: 10%;
+    margin-left: 10%;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .home {
+    margin-right: 15%;
+    margin-left: 15%;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .home {
+    margin-right: 25%;
+    margin-left: 25%;
+  }
+}
+
 h3 {
   margin: 40px 0 0;
 }
