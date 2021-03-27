@@ -2,7 +2,7 @@
   <div class="box">
     <img :src="'weather_icons/' + fileName()" alt="weather icon" width="50" height="50" />
     <div class="left">
-      <h2 class="small-bottom">{{ weekDay() }}</h2>
+      <h2 class="small-bottom">{{ weekDay(dayInfo.timestamp) }}</h2>
       <p class="small-top">{{ dayInfo.description }}</p>
     </div>
     <div class="right">
@@ -40,9 +40,9 @@ export default defineComponent({
       const iconMap: { [key: string]: string } = iconData
       return iconMap[this.dayInfo.iconCode]
     },
-    weekDay(): string {
+    weekDay(timestamp: string): string {
       const daysMap: { [key: string]: string } = daysOfWeek
-      return daysMap[this.dayInfo.timestamp.toString().slice(0, 3)]
+      return daysMap[new Date(timestamp).toString().slice(0, 3)]
     }
   }
 })

@@ -1,4 +1,4 @@
-import { City, DayForecast, CallResult } from "../../src/common/types"
+import { City, DayForecast, FiveDayForecast } from "../../src/common/types"
 import axios, { AxiosResponse } from "axios"
 
 // define constants
@@ -7,9 +7,9 @@ const FC_ROUTE = "forecast"
 const UV_ROUTE = "uvi"
 const RESULTS_PER_DAY = 24 / 3
 
-export async function fetch5DayForecast(zipCode: string, units: string): Promise<CallResult> {
-  const apiKey = process.env.API_KEY
+export async function fetch5DayForecast(zipCode: string, units: string): Promise<FiveDayForecast> {
   try {
+    const apiKey = process.env.API_KEY
     const resp = await axios.get(END_POINT + FC_ROUTE + "?zip=" + zipCode + "&appid=" + apiKey + "&units=" + units)
     return parseForecastResp(resp)
   } catch (err) {
@@ -19,7 +19,7 @@ export async function fetch5DayForecast(zipCode: string, units: string): Promise
 }
 
 /**
- * @deprecated upstream API provider is retiring this call on April 1st 2021 
+ * @deprecated upstream API provider is retiring this call on April 1st 2021
  */
 export async function fetchUV(lat: number, long: number): Promise<number> {
   const apiKey = process.env.API_KEY
@@ -32,7 +32,7 @@ export async function fetchUV(lat: number, long: number): Promise<number> {
   }
 }
 
-function parseForecastResp(resp: AxiosResponse<any>): CallResult {
+function parseForecastResp(resp: AxiosResponse<any>): FiveDayForecast {
   try {
     const { name, coord } = resp.data.city
     const { lat, lon } = coord
@@ -65,7 +65,7 @@ function parseForecastResp(resp: AxiosResponse<any>): CallResult {
       }
     })
 
-    return new CallResult(queriedCity, forecasts)
+    return new FiveDayForecast(queriedCity, forecasts)
   } catch (err) {
     throw new Error(err)
   }
