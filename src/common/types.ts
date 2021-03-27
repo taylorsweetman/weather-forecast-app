@@ -45,7 +45,7 @@ export class City {
   }
 }
 
-export class CallResult {
+export class FiveDayForecast {
   city: City
   forecastList: Array<DayForecast>
   currentUV: number

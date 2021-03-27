@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import { CallResult } from "../common/types"
+import { FiveDayForecast } from "../common/types"
 import DayWeather from "../components/DayWeather.vue"
 import axios from "axios"
 
@@ -25,7 +25,7 @@ export default defineComponent({
   components: { DayWeather },
   data() {
     return {
-      dataPayload: new CallResult(),
+      dataPayload: new FiveDayForecast(),
       zipCode: "",
       goodZip: false,
       stateList: [false, false, false, false, false],
@@ -45,11 +45,11 @@ export default defineComponent({
       else this.goodZip = false
     },
     async fetchData() {
-      this.dataPayload = new CallResult()
+      this.dataPayload = new FiveDayForecast()
       this.errorMsg = ""
       this.stateList = [false, false, false, false, false]
       try {
-        let result: CallResult
+        let result: FiveDayForecast
         if (this.mobileMode) result = (await axios.get("http://192.168.2.34:3000/forecast/" + this.zipCode)).data
         else result = (await axios.get("http://localhost:3000/forecast/" + this.zipCode)).data
 
