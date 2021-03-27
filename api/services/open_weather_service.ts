@@ -1,6 +1,5 @@
 import { City, DayForecast, FiveDayForecast } from "../../src/common/types"
 import axios, { AxiosResponse } from "axios"
-import { getForecast, putForecast } from "./redis_service"
 
 // define constants
 const END_POINT = "https://api.openweathermap.org/data/2.5/"

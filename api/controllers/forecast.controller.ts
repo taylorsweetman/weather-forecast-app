@@ -1,7 +1,9 @@
 import { Request, Response } from "express"
 import { FiveDayForecast } from "../../src/common/types"
 import { fetch5DayForecast, fetchUV } from "../services/open_weather_service"
-import { getForecast, putForecast } from "../services/redis_service"
+import { getForecastFromCache, putForecastToCache } from "../services/redis_service"
+
+const DEF_TTL = 1 // 1 hour
 
 // TODO cleanse incoming zip for safety
 export const index = async (req: Request, res: Response) => {
@@ -12,9 +14,9 @@ export const index = async (req: Request, res: Response) => {
     const zipCode = req.params.zip
 
     // try to fetch forecast from cache
-    forecast = await getForecast(zipCode)
-
-    if (!forecast.city.name) {
+    try {
+      forecast = await getForecastFromCache(zipCode)
+    } catch (error) {
       // fetch forecast from API
       forecast = await fetch5DayForecast(zipCode, "metric")
       writeToCache = true
@@ -33,7 +35,7 @@ export const index = async (req: Request, res: Response) => {
       }
     }
 
-    if (writeToCache) putForecast(zipCode, forecast, 60)
+    if (writeToCache) putForecastToCache(zipCode, forecast, DEF_TTL)
     res.status(200).send(forecast)
   } catch (err) {
     if (err.message == 404) res.status(404).send("Bad zipcode")
