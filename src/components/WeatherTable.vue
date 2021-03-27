@@ -2,11 +2,12 @@
   <div class="weather-table">
     <p>Enter Zip Code</p>
     <input v-model="zipCode" @keyup="verifyZip" />
-    <p class="small-bottom">{{ cityName }}</p>
-    <p class="small-top" v-if="currentUvi > 0">Current UV Index: {{ currentUvi }}</p>
+    <p class="small-bottom">{{ dataPayload.city.name }}</p>
+    <p class="small-top" v-if="dataPayload.currentUV > 0">Current UV Index: {{ dataPayload.currentUV }}</p>
+    <!-- TODO don't deconstruct the forecastList here, take it as a prop instead -->
     <day-weather
-      v-for="(day, idx) in forecastList"
-      :key="day.timestamp"
+      v-for="(day, idx) in dataPayload.forecastList"
+      :key="idx"
       :high="day.tempHigh"
       :timestamp="new Date(day.timestamp)"
       :feels-like="day.feelsLike"
@@ -19,12 +20,13 @@
       :selected="stateList[idx]"
       @click="selectDay(idx)"
     />
+    {{ errorMsg }}
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import { CallResult, DayForecast } from "../common/types"
+import { CallResult } from "../common/types"
 import DayWeather from "../components/DayWeather.vue"
 import axios from "axios"
 
@@ -35,10 +37,8 @@ export default defineComponent({
       dataPayload: new CallResult(),
       zipCode: "",
       goodZip: false,
-      cityName: "",
-      currentUvi: -1,
-      forecastList: new Array<DayForecast>(),
       stateList: [false, false, false, false, false],
+      errorMsg: "",
       mobileMode: false
     }
   },
@@ -54,20 +54,15 @@ export default defineComponent({
       else this.goodZip = false
     },
     async fetchData() {
+      this.dataPayload = new CallResult()
       try {
         let result: CallResult
         if (this.mobileMode) result = (await axios.get("http://192.168.2.34:3000/forecast/" + this.zipCode)).data
         else result = (await axios.get("http://localhost:3000/forecast/" + this.zipCode)).data
 
         this.dataPayload = result
-        this.cityName = result.city.name
-        this.currentUvi = result.currentUV
-        this.forecastList = new Array<DayForecast>()
-        for (const nextDay of result.forecastList) {
-          this.forecastList.push(nextDay)
-        }
-      } catch (error) {
-        console.error(error)
+      } catch (err) {
+        if (err.response.status == 404) this.errorMsg = "No Results Found. Did you enter a valid ZIP Code?"
       }
     },
     selectDay(idx: number) {

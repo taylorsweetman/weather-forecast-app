@@ -13,9 +13,8 @@ export async function fetch5DayForecast(zipCode: string, units: string): Promise
     const resp = await axios.get(END_POINT + FC_ROUTE + "?zip=" + zipCode + "&appid=" + apiKey + "&units=" + units)
     return parseForecastResp(resp)
   } catch (err) {
-    if (err.response) throw new Error(err.response.status)
-    else if (err.request) throw new Error(err.response)
-    else throw new Error(err)
+    if (err.response.status) throw new Error(err.response.status)
+    else throw new Error(err.message)
   }
 }
 
@@ -25,9 +24,8 @@ export async function fetchUV(lat: number, long: number): Promise<number> {
     const resp = await axios.get(END_POINT + UV_ROUTE + "?lat=" + lat + "&lon=" + long + "&appid=" + apiKey)
     return resp.data.value
   } catch (err) {
-    if (err.response) throw new Error(err.response.status)
-    else if (err.request) throw new Error(err.response)
-    else throw new Error(err)
+    if (err.response.status) throw new Error(err.response.status)
+    else throw new Error(err.message)
   }
 }
 
@@ -48,7 +46,18 @@ function parseForecastResp(resp: AxiosResponse<any>): CallResult {
         const { temp_max, temp_min, feels_like, humidity, pressure } = forecast.main
         const { icon, main } = forecast.weather[0]
         const { speed } = forecast.wind
-        const nextDay = new DayForecast(temp_max, temp_min, feels_like, timestamp, icon, main, humidity, speed, pop, pressure)
+        const nextDay = new DayForecast(
+          temp_max,
+          temp_min,
+          feels_like,
+          timestamp,
+          icon,
+          main,
+          humidity,
+          speed,
+          pop,
+          pressure
+        )
         forecasts.push(nextDay)
       }
     })
