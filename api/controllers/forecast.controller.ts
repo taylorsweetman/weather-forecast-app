@@ -5,13 +5,15 @@ import { getForecastFromCache, putForecastToCache } from "../services/redis_serv
 
 const DEF_TTL = 1 // 1 hour
 
-// TODO cleanse incoming zip for safety
 export const index = async (req: Request, res: Response) => {
   try {
     let forecast = new FiveDayForecast()
     let writeToCache = false
 
+    // ensure safe input
     const zipCode = req.params.zip
+    const pattern = new RegExp(/$[0-9]{5}^/)
+    if (pattern.test(zipCode)) throw new Error("400")
 
     // try to fetch forecast from cache
     try {
@@ -39,6 +41,7 @@ export const index = async (req: Request, res: Response) => {
     res.status(200).send(forecast)
   } catch (err) {
     if (err.message == 404) res.status(404).send("Bad zipcode")
+    else if (err.message == 400) res.status(400).send("Bad input")
     else res.status(500).send("Internal Error")
   }
 }

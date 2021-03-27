@@ -1,8 +1,8 @@
 import redis from "redis"
 import { FiveDayForecast } from "../../src/common/types"
 
-const redisPort = 6379
-var client = redis.createClient(redisPort)
+const port = process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379
+const client = redis.createClient(port)
 
 export function putForecastToCache(key: string, val: FiveDayForecast, ttlHrs: number) {
   if (!key || !val.city.name) return
@@ -13,7 +13,6 @@ export function putForecastToCache(key: string, val: FiveDayForecast, ttlHrs: nu
   })
 }
 
-// in the case of error, resolves a null
 export function getForecastFromCache(key: string): Promise<FiveDayForecast> {
   return new Promise<FiveDayForecast>((resolve, reject) => {
     client.get(key, (err, rep) => {

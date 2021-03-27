@@ -80,6 +80,7 @@ input {
   border-radius: 10px;
   text-align: center;
   width: 40%;
+  max-width: 150px;
   height: 2rem;
 }
 </style>
