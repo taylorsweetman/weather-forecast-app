@@ -1,6 +1,9 @@
 import redis from "redis"
 import { FiveDayForecast } from "../../src/common/types"
 
+/* improvement idea: cache empty objects for zip codes w/o results
+any decrease in external calls is a good thing */
+
 const port = process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379
 const host = process.env.REDIS_HOST ? process.env.REDIS_HOST : "127.0.0.1"
 const client = redis.createClient(port, host)

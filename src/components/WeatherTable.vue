@@ -1,7 +1,7 @@
 <template>
   <!-- improvement idea: have a toggle to flip between celcius and fahrenheit -->
   <div class="weather-table">
-    <p>Enter Zip Code</p>
+    <p>Enter ZIP Code</p>
     <input v-model="zipCode" @keyup="verifyZip" :class="{ 'bad-input': !partialZip && !fullZip }" />
     <p class="small-bottom">{{ dataPayload.city.name }}</p>
     <p class="small-top" v-if="dataPayload.currentUV > 0">Current UV Index: {{ dataPayload.currentUV }}</p>
