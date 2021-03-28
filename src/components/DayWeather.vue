@@ -11,7 +11,6 @@
       <div v-show="selected">
         <p>Humidity: {{ dayInfo.humidity }} %</p>
         <p>Wind Speed: {{ dayInfo.windSpeed }} m/s</p>
-        <p>Chance of Rain: {{ dayInfo.pop }} %</p>
         <p>Pressure: {{ dayInfo.pressure }} hPa</p>
       </div>
     </div>

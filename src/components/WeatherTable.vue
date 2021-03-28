@@ -1,7 +1,8 @@
 <template>
+  <!-- improvement idea: have a toggle to flip between celcius and fahrenheit -->
   <div class="weather-table">
     <p>Enter Zip Code</p>
-    <input v-model="zipCode" @keyup="verifyZip" />
+    <input v-model="zipCode" @keyup="verifyZip" :class="{ 'bad-input': !partialZip && !fullZip }" />
     <p class="small-bottom">{{ dataPayload.city.name }}</p>
     <p class="small-top" v-if="dataPayload.currentUV > 0">Current UV Index: {{ dataPayload.currentUV }}</p>
     <day-weather
@@ -27,21 +28,23 @@ export default defineComponent({
     return {
       dataPayload: new FiveDayForecast(),
       zipCode: "",
-      goodZip: false,
+      partialZip: true,
+      fullZip: false,
       stateList: [false, false, false, false, false],
       errorMsg: ""
     }
   },
   watch: {
-    goodZip: function(val) {
+    fullZip: function(val) {
       if (val) this.fetchData()
     }
   },
   methods: {
     verifyZip() {
-      const pattern = new RegExp(/^\d{5}$/)
-      if (pattern.test(this.zipCode)) this.goodZip = true
-      else this.goodZip = false
+      const partialPattern = new RegExp(/^\d{0,4}$/)
+      const fullPattern = new RegExp(/^\d{5}$/)
+      this.partialZip = partialPattern.test(this.zipCode)
+      this.fullZip = fullPattern.test(this.zipCode)
     },
     async fetchData() {
       this.dataPayload = new FiveDayForecast()
@@ -52,7 +55,7 @@ export default defineComponent({
 
         this.dataPayload = result
       } catch (err) {
-        if (err.response.status == 404) this.errorMsg = "No Results Found. Did you enter a valid ZIP Code?"
+        if (err.response.status == 404) this.errorMsg = "No Results Found. Did you enter a real ZIP Code?"
       }
     },
     selectDay(idx: number) {
@@ -79,5 +82,9 @@ input {
   width: 40%;
   max-width: 150px;
   height: 2rem;
+}
+
+.bad-input {
+  background-color: salmon;
 }
 </style>

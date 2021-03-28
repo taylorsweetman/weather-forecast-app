@@ -12,8 +12,8 @@ export const index = async (req: Request, res: Response) => {
 
     // ensure safe input
     const zipCode = req.params.zip
-    const pattern = new RegExp(/$[0-9]{5}^/)
-    if (pattern.test(zipCode)) throw new Error("400")
+    const pattern = new RegExp(/^\d{5}$/)
+    if (!pattern.test(zipCode)) throw new Error("400")
 
     // try to fetch forecast from cache
     try {
