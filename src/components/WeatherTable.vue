@@ -29,8 +29,7 @@ export default defineComponent({
       zipCode: "",
       goodZip: false,
       stateList: [false, false, false, false, false],
-      errorMsg: "",
-      mobileMode: false
+      errorMsg: ""
     }
   },
   watch: {
@@ -49,9 +48,7 @@ export default defineComponent({
       this.errorMsg = ""
       this.stateList = [false, false, false, false, false]
       try {
-        let result: FiveDayForecast
-        if (this.mobileMode) result = (await axios.get("http://192.168.2.34:3000/forecast/" + this.zipCode)).data
-        else result = (await axios.get("http://localhost:3000/forecast/" + this.zipCode)).data
+        const result = (await axios.get("http://localhost:3000/forecast/" + this.zipCode)).data
 
         this.dataPayload = result
       } catch (err) {
