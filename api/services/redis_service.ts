@@ -2,7 +2,8 @@ import redis from "redis"
 import { FiveDayForecast } from "../../src/common/types"
 
 const port = process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379
-const client = redis.createClient(port)
+const host = process.env.REDIS_HOST ? process.env.REDIS_HOST : "127.0.0.1"
+const client = redis.createClient(port, host)
 
 export function putForecastToCache(key: string, val: FiveDayForecast, ttlHrs: number) {
   if (!key || !val.city.name) return
